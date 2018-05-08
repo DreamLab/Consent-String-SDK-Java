@@ -2,7 +2,7 @@
 build/*
 /bin/
 /build/
-.swp
+*.swp
 gradle-app.setting
 !gradle-wrapper.jar
 .gradletasknamecache
