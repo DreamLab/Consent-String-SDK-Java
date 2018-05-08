@@ -1,6 +1,8 @@
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
+apply plugin: 'maven-publish'
+apply plugin: "com.jfrog.artifactory"
 
 group = 'com.iab.gdpr'
 version = '1.0.0-SNAPSHOT'
@@ -18,4 +20,62 @@ dependencies {
     testCompile (
         "junit:junit:4.11",
     )
+}
+
+project.ext {
+    artifactoryRepo = version.contains("-SNAPSHOT") ? "libs-snapshot-local" : "libs-release-local"    
+}
+
+buildscript {
+    repositories {
+        maven {
+            url 'http://maven.onet//plugins-release'
+            credentials {
+                username = "${System.env.MAVEN_USERNAME}"
+                password = "${System.env.MAVEN_API_KEY}"
+            }
+        }
+        
+    }
+    dependencies {
+        classpath "org.jfrog.buildinfo:build-info-extractor-gradle:4+"
+    }
+}
+
+publishing {
+    repositories {
+      maven {
+        credentials {
+            username "${System.env.MAVEN_USERNAME}"
+            password "${System.env.MAVEN_API_KEY}"
+        }
+        url "http://maven.onet/${artifactoryRepo}"
+      }
+    }
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
+}
+
+artifactory {
+    contextUrl = 'http://maven.onet'
+    publish {
+        repository {
+            repoKey = "${artifactoryRepo}"
+            username = "${System.env.MAVEN_USERNAME}"
+            password = "${System.env.MAVEN_API_KEY}"
+            maven = true
+        
+        }
+        defaults {
+            publications('mavenJava')
+            publishArtifacts = true
+            publishPom = true
+        }
+    }
+    resolve {
+        repoKey = 'mavenCentral'
+    }
 }
