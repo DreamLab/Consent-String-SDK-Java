@@ -1,3 +1,4 @@
+package com.iab.gdpr.consent;
 
 import java.text.ParseException;
 import java.time.Instant;
