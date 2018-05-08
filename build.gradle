@@ -1,12 +1,21 @@
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
+
+group = 'com.iab.gdpr'
+version = '1.0.0-SNAPSHOT'
+
+description = """A Java implementation of the IAB Consent String spec."""
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
 repositories {
     mavenCentral()
 }
 
- dependencies {
-        testCompile (
-            "junit:junit:4.11",
-        )
-    }
+dependencies {
+    testCompile (
+        "junit:junit:4.11",
+    )
+}
