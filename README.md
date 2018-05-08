@@ -31,7 +31,8 @@ Framework Technical specifications available at: https://raw.githubusercontent.c
 - [Use cases](#use-cases)
 - [Additional Documentation](#documentation)
 
-
+#### Usage
+To start using this library, declare the following dependency in your Maven or Gradle build file: ```group: 'com.iab.gdpr', name: 'consent-string-sdk-java', version:'<your target version>'```
 
 
 
